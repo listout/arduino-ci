@@ -1,8 +1,6 @@
 name: test
 
-on:
-  - pull_request
-  - push
+on: [push, pull_request]
 
 jobs:
   runs-on: windows-latest
@@ -19,5 +17,5 @@ jobs:
         arduino-cli core update-index https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
         arduino-cli core install esp32:esp32
 
-    #- name: Compile Sketch
-      #run: arduino-cli compile --fqbn esp32:esp32:esp32 ./blink
+    - name: Compile Sketch
+      run: arduino-cli compile --fqbn esp32:esp32:esp32 ./blink
