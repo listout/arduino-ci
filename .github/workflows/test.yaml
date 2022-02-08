@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Platform
         run: |
-          arduino-cli core update-index https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
           arduino-cli core install esp32:esp32
 
       - name: Compile Sketch
