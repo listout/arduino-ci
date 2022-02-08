@@ -24,7 +24,7 @@ jobs:
         run: arduino-cli compile --fqbn esp32:esp32:esp32 ./blink
 
       - name: Archive
-        uese: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: test-job
           path: ./blink/blink.bin
