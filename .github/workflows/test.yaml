@@ -1,6 +1,8 @@
 name: test
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   test-job:
@@ -13,11 +15,16 @@ jobs:
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1
 
-      - name: Update index for esp32
-        run: arduino-cli core update-index --additional-urls 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json'
-
       - name: Install platform
-        run: arduino-cli core install esp32:esp32 --additional-urls 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json'
+        run: |
+          arduino-cli core update-index --additional-urls 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json'
+          arduino-cli core install esp32:esp32 --additional-urls 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json'
 
-      #- name: Compile Sketch
-        #run: arduino-cli compile --fqbn esp32:esp32:esp32 ./blink
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn esp32:esp32:esp32 ./blink
+
+      - name: Archive
+        uese: actions/upload-artifact@v2
+        with:
+          name: test-job
+          path: ./blink/blink.bin
